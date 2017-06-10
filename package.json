@@ -1,0 +1,22 @@
+{
+  "name": "scoopem",
+  "version": "1.0.0",
+  "description": "Simple interface for tracking last time you did a task",
+  "main": "index.php",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lenknerd/ScoopEm.git"
+  },
+  "author": "David Lenkner",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lenknerd/ScoopEm/issues"
+  },
+  "homepage": "https://github.com/lenknerd/ScoopEm#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1"
+  }
+}
