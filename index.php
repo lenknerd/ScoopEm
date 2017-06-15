@@ -50,7 +50,7 @@
 	<script src="js/app.js"></script>
 	<script src="js/router.js"></script>
 
-	<!-- Views the site -->
+	<!-- Views for the site -->
 	<script src="js/views/logIn.js"></script>
 
 </body></html>

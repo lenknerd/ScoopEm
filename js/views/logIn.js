@@ -4,7 +4,7 @@
  * David Lenkner, c. 2017
  */
 
-app.views.WelcomeView = Marionette.View.extend({
+app.views.LogInView = Marionette.View.extend({
 	
 	el: '#main', // Where it will go in index.html
 	
