@@ -8,11 +8,10 @@ session_start();
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
-require 'vendor/autoload.php';
-require_once 'php/templateSpecifics.php';
-require_once 'php/authentication.php';
-require_once 'php/commuteLogger.php';
-require_once 'php/utils.php';
+require '../vendor/autoload.php';
+require_once 'templates.php';
+require_once 'authentication.php';
+require_once 'utils.php';
 
 $app = new \Slim\App;
 
