@@ -51,6 +51,6 @@
 	<script src="js/router.js"></script>
 
 	<!-- Views the site -->
-	<script src="js/views/welcome.js"></script>
+	<script src="js/views/logIn.js"></script>
 
 </body></html>
