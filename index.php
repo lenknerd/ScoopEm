@@ -27,24 +27,7 @@
 	<div class="container" id="main">
 	</div>
 
-
-	<!-- Bootstrap and jQuery JavaScript -->
-	<script src="js/jquery-3.2.1.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-
-	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-	<script src="js/ie10-viewport-bug-workaround.js"></script>
-
-	<!-- Marionette with Underscore templating -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/backbone.marionette/2.4.1/backbone.marionette.min.js"></script>
-
-	<!-- Router and main app for my site -->
-	<script src="js/app.js"></script>
-	<script src="js/router.js"></script>
-
-	<!-- Views for the site -->
-	<script src="js/views/logIn.js"></script>
+	<!-- Javascript for my site concatenated --> 
+	<script src="js/all.js"></script>
 
 </body></html>
