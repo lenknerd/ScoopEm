@@ -42,7 +42,7 @@ gulp.task('js', function() {
 		'node_modules/bootstrap/dist/js/bootstrap.js', // .min
 		'node_modules/underscore/underscore.js', // -min
 		'node_modules/lodash/dist/lodash.js', // .min
-		'node_modules/backbone.js', // -min
+		'node_modules/backbone/backbone.js', // -min
 		'node_modules/backbone.babysitter/lib/backbone.babysitter.js', //.min
 		'node_modules/backbone.wreqr/lib/backbone.wreqr.js', // .min	
 		'node_modules/backbone.marionette/lib/backbone.marionette.min.js', // .min

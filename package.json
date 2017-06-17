@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/lenknerd/ScoopEm#readme",
   "devDependencies": {
+    "check-version": "0.0.1",
     "gulp": "^3.9.1"
   }
 }
