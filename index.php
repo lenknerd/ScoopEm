@@ -16,15 +16,9 @@
 
 	<title>Scoop 'Em</title>
 
-	<!-- Bootstrap core CSS -->
-	<link href="css/bootstrap.min.css" rel="stylesheet">
-
-	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-	<link href="css/ie10-viewport-bug-workaround.css" rel="stylesheet">
-
-	<!-- My styles (David Lenker's) custom to my home page site -->
-	<link href="css/scoopem.css" rel="stylesheet">
-
+	<!-- Require all css (concatenated in gulp) -->
+	<link href="css/all.css" rel="stylesheet">
+	
 </head>
 
 <body>
