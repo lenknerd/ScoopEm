@@ -60,8 +60,7 @@ class JsonResponse_Basic extends JsonResponse {
 
 
 /* Next simplest instance of above abstract class, specific data is string
- * with default empty string
- */
+ * with default empty string */
 class JsonResponse_Str extends JsonResponse {
 	// Some string data that may be provided with response
 	public $specificString = "";
@@ -75,10 +74,10 @@ class JsonResponse_Str extends JsonResponse {
 
 // Get database connection
 function getDatabaseConnection() {
-	$db_srvrname = "";
-	$db_username = "";
-	$db_password = "";
-	$db_dbasname = "";
+	$db_srvrname = "localhost";
+	$db_username = "scoopem-user";
+	$db_password = "scoopem-user";
+	$db_dbasname = "scoopem";
 
 	// Create connection
 	$conn = null;

@@ -33,11 +33,6 @@ $app->post('/login', function() {
 	validateAndCreateSession($_POST['username'], $_POST['password']);
 });
 
-// Route for logging out
-$app->get('/logout', function() {
-	endLogInSession();
-});
-
 // Middleware function to return empty error response if not logged in
 $RequireAuthMW = function ($request, $response, $next) {
 	if( ! hasValidSession() ) {
@@ -48,38 +43,19 @@ $RequireAuthMW = function ($request, $response, $next) {
 	return $response;
 };
 
-// Route for starting a trip
+/* 
+ 
+// Example of using that middleware	
 $app->get('/startTrip', function() {
 	startTrippin();
-})->add($RequireAuthMW);
+})->add($RequireAuthMW); 
 
-// Route for stopping a trip
-$app->get('/stopTrip', function() {
-	stopTrippin();
-})->add($RequireAuthMW);
+// Route for logging out
+$app->get('/logout', function() {
+	endLogInSession();
+});
 
-// Route for logging a point during a trip
-$app->post('/logPoint', function() {
-	logAPoint($_POST['time'], $_POST['latitude'], $_POST['longitude']);
-})->add($RequireAuthMW);
-
-// Route for getting information about a trip
-$app->get('/tripInfo', function() {
-	getTripInfo( $_GET['tripid'] );
-})->add($RequireAuthMW);
-
-// Route for getting a particular wordswap html section
-$app->get('/getWordSwap/{wName}', function($request, $response, $args) {
-	// Read file from disk
-	$wName = $request->getAttribute('wName');
-	$htdoc = new DOMDocument();
-	$htdoc->validateOnParse = true;
-	$htdoc->loadHTMLFile("./html/internal/wordswaps/${wName}.html");
-
-	// Return document to client
-	echo $htdoc->saveHTML();
-})->add($RequireAuthMW);
-
+*/
 
 // Run the application
 $app->run();
