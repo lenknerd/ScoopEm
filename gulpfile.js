@@ -37,18 +37,18 @@ gulp.task('css', function() {
 
 // Concatenate JS and send to publish dir
 gulp.task('js', function() {
-	return gulp.src([
+	jsources = [
 		'node_modules/jquery/dist/jquery.js', // .min
 		'node_modules/bootstrap/dist/js/bootstrap.js', // .min
 		'node_modules/underscore/underscore.js', // -min
-		'node_modules/lodash/dist/lodash.js', // .min
 		'node_modules/backbone/backbone.js', // -min
-		'node_modules/backbone.babysitter/lib/backbone.babysitter.js', //.min
-		'node_modules/backbone.wreqr/lib/backbone.wreqr.js', // .min	
-		'node_modules/backbone.marionette/lib/backbone.marionette.min.js', // .min
+		'node_modules/backbone.radio/build/backbone.radio.js', // .min
+		'node_modules/backbone.marionette/lib/backbone.marionette.js', // .min
 		'js/*.js',
 		'js/views/*.js'
-	]).pipe(concat('all.js'))
+	]
+	// Later use min versions (or put in minify flag to use those)
+	return gulp.src(jsources).pipe(concat('all.js'))
 		.pipe(gulp.dest(pubRoot + 'js'));
 });
 
