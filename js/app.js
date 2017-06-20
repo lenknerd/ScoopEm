@@ -21,6 +21,8 @@ var app = Marionette.Application.extend({
 	 * is just for speed, non-essential checks dont have to go out */
 	loggedIn: false,
 	userName: "",
+
+	mainView: null,
 	
 	/* Take a pre-defined view (usually declared in router) and show it in the
 	 * main element, storing view here in app.mainView. Also close last. */
@@ -28,8 +30,8 @@ var app = Marionette.Application.extend({
 		if(this.mainView) {
 			console.log('Closing main view...');
 			this.mainView.close();
-		}	
-		this.mainView = newView;
+		}
+		this.mainView = view;
 		console.log('Rendering main view...');
 		this.mainView.render();
 	}
@@ -57,11 +59,17 @@ app.on("start", function() {
 	console.log("Starting router.");
 	Backbone.history.start();
 		
-	// Check if there is no route (# in addr), go to logIn
+	/* Check if there is no route (# in addr), go to logIn
+	 * Note, server would force logIn anyway even if js was hacked
+	 * but save some effort by checking locally */
 	if( ! window.location.href.includes("#") ) {
-		console.log("Detected no route, going to welcome.");
-		// Start up on home page if no route selected
-		app.router.navigate('welcome', {trigger: true});
+		console.log("Detected no route.  Are we logged in?");
+		if(!app.loggedIn) {
+			console.log("Nope, go to logIn."); 
+			app.router.navigate('logIn', {trigger: true});
+		} else {
+			// Nothing here yet
+		}
 	}
 });
 

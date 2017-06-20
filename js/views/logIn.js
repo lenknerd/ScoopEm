@@ -15,10 +15,10 @@ app.views.LogInView = Marionette.View.extend({
 		console.log("Rendering logIn view.");
 		var vu = this;
 		// Load the template and show it
-		$.get('api.php/tpl/logInTemplate', function(data) {
+		$.get('php/api.php/tpl/logInTemplate', function(data) {
 			// Store template function in the view
 			vu.tpl = _.template(data);
-			vu.$el.html(this.tpl());
+			vu.$el.html(vu.tpl());
 		}, 'html');
 	},
 	
