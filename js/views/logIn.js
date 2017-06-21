@@ -23,6 +23,42 @@ app.views.LogInView = Marionette.View.extend({
 	},
 	
 	events: {
+		'click .subm' : 'sendLogInInfo'
+	},
+
+	sendLogInInfo: function() {
+		var uAndP = {
+			'username': $('#userName').val(),
+			'password': $('#password').val()
+		};
+		console.log("Submitting log in request...");
+		console.log(uAndP);
+		$.ajax({
+			type: 'POST',
+			url: 'api.php/login',
+			data: uAndP,
+			dataType: 'json',
+			success: function(data) {
+				// Note this is success of the query, not necessarily log-in...
+				console.log("Log-in request returned.");
+				if(data.success) {
+					// Here's where we know username/password is correct
+					console.log("Log-in info was right.");
+					app.loggedIn = true;
+					app.userName = data.specificString;
+					// Navigate to main screen
+					// TODO - add
+					// app.router.navigate('main', {trigger: true} );
+				} else {
+					console.log("Something went wrong with log-in.");
+					var warnHTML = '<strong>Log-in error!</strong> ';
+					warnHTML += data.errMessage;
+					$('#logInErrorAlert').html( warnHTML );
+					$('#logInErrorAlert').show();
+				}
+			}
+		});
+
 	},
 	
 	// Empty out main element
