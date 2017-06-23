@@ -43,19 +43,10 @@ $RequireAuthMW = function ($request, $response, $next) {
 	return $response;
 };
 
-/* 
- 
-// Example of using that middleware	
-$app->get('/startTrip', function() {
-	startTrippin();
-})->add($RequireAuthMW); 
-
-// Route for logging out
+// Route for logging out (must be logged in to do this)
 $app->get('/logout', function() {
 	endLogInSession();
-});
-
-*/
+})->add($RequireAuthMW);
 
 // Run the application
 $app->run();
