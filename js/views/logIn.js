@@ -27,6 +27,7 @@ app.views.LogInView = Marionette.View.extend({
 	},
 
 	sendLogInInfo: function() {
+		console.log('Running callback function for submit event.');
 		var uAndP = {
 			'username': $('#userName').val(),
 			'password': $('#password').val()
@@ -35,7 +36,7 @@ app.views.LogInView = Marionette.View.extend({
 		console.log(uAndP);
 		$.ajax({
 			type: 'POST',
-			url: 'api.php/login',
+			url: 'php/api.php/login',
 			data: uAndP,
 			dataType: 'json',
 			success: function(data) {
