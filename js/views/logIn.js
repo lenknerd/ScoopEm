@@ -47,9 +47,8 @@ app.views.LogInView = Marionette.View.extend({
 					console.log("Log-in info was right.");
 					app.loggedIn = true;
 					app.userName = data.specificString;
-					// Navigate to main screen
-					// TODO - add
-					// app.router.navigate('main', {trigger: true} );
+					// Navigate to home screen
+					app.router.navigate('home', {trigger: true} );
 				} else {
 					console.log("Something went wrong with log-in.");
 					var warnHTML = '<strong>Log-in error!</strong> ';
