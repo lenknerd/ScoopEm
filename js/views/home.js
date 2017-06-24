@@ -1,10 +1,10 @@
 /*
- * main.js
- * View for main ScoopEm page after logged in
+ * home.js
+ * View for main base ScoopEm page after logged in, where tasks list is
  * David Lenkner, c. 2017
  */
 
-app.views.MainView = Marionette.View.extend({
+app.views.HomeView = Marionette.View.extend({
 	
 	el: '#main', // Where it will go in index.html
 	
@@ -12,10 +12,10 @@ app.views.MainView = Marionette.View.extend({
 	},
 	
 	render: function() {
-		console.log("Rendering main view.");
+		console.log("Rendering home view.");
 		var vu = this;
 		// Load the template and show it
-		$.get('php/api.php/tpl/mainTemplate', function(data) {
+		$.get('php/api.php/tpl/homeTemplate', function(data) {
 			// Store template function in the view
 			vu.tpl = _.template(data);
 			vu.$el.html(vu.tpl());
