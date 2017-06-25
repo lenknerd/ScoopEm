@@ -14,12 +14,43 @@ app.views.HomeView = Marionette.View.extend({
 	render: function() {
 		console.log("Rendering home view.");
 		var vu = this;
+
 		// Load the template and show it
-		$.get('php/api.php/tpl/homeTemplate', function(data) {
-			// Store template function in the view
+		var load_hometpl = $.get('php/api.php/tpl/homeTemplate',
+				function(data) {
+			// Store home template function in the view
 			vu.tpl = _.template(data);
-			vu.$el.html(vu.tpl());
+			vu.$el.html(vu.tpl());	
 		}, 'html');
+
+		var load_tasktpl = $.get('php/api.php/tpl/taskTemplate',
+				function(data) {
+			// Store task template in the view
+			vu.task_tpl = _.template(data);
+		}, 'html');
+
+		var load_tasks = $.post('php/api.php/getTasks',
+				{
+					user: app.username
+				},
+				function(data) {
+			// Store tasks temporarily in this view, but will really
+			// reside in the individual tasks
+			vu.tasks = data.tasks;
+		}, 'json');
+
+		// When you've got the home template rendered, loaded task template
+		// and also loaded all the tasks, then build task views
+		$.when(load_hometpl, load_tasktpl, load_tasks).done(function() {
+			vu.task_views = [];
+			$.each( vu.tasks, function(i, task) {
+				vu.task_views.push(new app.views.TaskView(
+							vu.task_tpl,
+							vu.data.tasks[i])
+						)
+				vu.task_views[vu.task_views.length-1].render();
+			});
+		});
 	},
 	
 	events: {
