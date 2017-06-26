@@ -47,7 +47,7 @@ app.views.HomeView = Marionette.View.extend({
 				vu.task_views.push(new app.views.TaskView(
 							vu.task_tpl,
 							vu.data.tasks[i])
-						)
+						);
 				vu.task_views[vu.task_views.length-1].render();
 			});
 		});
@@ -58,6 +58,12 @@ app.views.HomeView = Marionette.View.extend({
 	
 	// Empty out main element
 	close: function() {
+		// Close the member views
+		$.each( this.task_views, function(i, taskView) {
+			taskView.close();
+		});
+
+		// Close this view itself
 		this.undelegateEvents();
 		$(this).empty();
 		this.unbind();
