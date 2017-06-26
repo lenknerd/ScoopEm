@@ -48,6 +48,12 @@ $app->get('/logout', function() {
 	endLogInSession();
 })->add($RequireAuthMW);
 
+// Route for requesting task data
+$app->post('/getTasks', function() {
+	// TODO get the tasks
+})->add($RequireAuthMW);
+
+
 // Run the application
 $app->run();
 

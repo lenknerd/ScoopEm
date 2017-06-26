@@ -17,7 +17,27 @@ app.views.TaskView = Marionette.View.extend({
 	
 	render: function() {
 		console.log("Rendering a task view.");
-		vu.$el.append(this.tpl(this.task));
+		this.$el.append(this.tpl({
+			color: this.getColor,
+			taskName: this.task.name,
+			dateLastDone: this.task.dateLastDone
+		}));
+	},
+
+	// Decide color based on how close to being overdue the task is
+	getColor: function() {		
+		var nowT = new Date();
+		var nSecondsDiff = nowT.getTime() - this.task.dateLastDone.getTime();
+		var percentTilOverdue = nSecondsDiff / this.task.cycleTimeSeconds;
+		if(percentTilOverdue > 0.9) {
+			return 'btn-success';
+		} else if(percentTilOverdue > 0.33) {
+			return 'btn-primary';
+		} else if(percentTilOverdue > 0.1) {
+			return 'btn-warning';
+		} else {
+			return 'btn-danger';
+		}
 	},
 	
 	events: {

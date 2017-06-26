@@ -5,4 +5,14 @@
  */
 
 
+#main-holder {
+	text-align: center;
+}
 
+.task {
+	margin: 10px;
+}
+
+#add-task-holder {
+	margin: 10px;
+}
