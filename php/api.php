@@ -51,7 +51,10 @@ $app->get('/logout', function() {
 
 // Route for requesting task data
 $app->post('/getTasks', function() {
-	// TODO get the tasks
+	// Gets JsonResponse object
+	$respon = tasksResponse();
+	// This echoes the JSON response
+	$respon->respondAndExit();
 })->add($RequireAuthMW);
 
 
