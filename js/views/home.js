@@ -34,9 +34,14 @@ app.views.HomeView = Marionette.View.extend({
 					user: app.username
 				},
 				function(data) {
-			// Store tasks temporarily in this view, but will really
-			// reside in the individual tasks
-			vu.tasks = data.tasks;
+			// If problem on server, log it
+			if(!data.success) {
+				console.log(data.errMessage);
+			} else {
+				/* Store tasks temporarily in this view, but will really
+				 * reside in the individual tasks */
+				vu.tasks = data.tasks;
+			}
 		}, 'json');
 
 		// When you've got the home template rendered, loaded task template

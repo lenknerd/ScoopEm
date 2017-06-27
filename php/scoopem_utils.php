@@ -15,6 +15,21 @@ class ScoopEmTask {
 	public $cycleTimeSeconds = 3600 * 24; // One day is default
 	// Name of task
 	public $name = "no name";
+
+	// Constructor takes the three els
+	public function __construct($dateLast, $cycleT, $nm) {
+		$this->dateLastDone = $dateLast;
+		$this->cycleTimeSeconds = $cycleT;
+		$this->name = $nm;
+	}
+
+	// Turn into To-JSON-friendly associative array
+	public function toAssocArray() {
+		return (object) ['dateLastDone' => $this->success,
+			'name' => $this->name,
+			'cycleTimeSeconds' => $this->cycleTimeSeconds
+		];
+	}
 }
 
 /* Child of JsonResponse abstract class, specific data is tasks */
