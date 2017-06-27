@@ -12,6 +12,7 @@ require '../vendor/autoload.php';
 require_once 'templates.php';
 require_once 'authentication.php';
 require_once 'utils.php';
+require_once 'scoopem_utils.php';
 
 $app = new \Slim\App;
 
