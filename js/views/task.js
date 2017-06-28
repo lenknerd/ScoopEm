@@ -6,21 +6,33 @@
 
 app.views.TaskView = Marionette.View.extend({
 	
-	el: '#task', // Element in which it will go
+	el: '#tasks', // Element in which it will go
 	
-	initialize: function(task_template, task_data) {
+	initialize: function() {
+	},
+	
+	setTemplateAndData: function(task_template, task_data) {
 		// Load task template in home view not here, to avoid
 		// repeated calls (should be cached anyway but in case)
 		this.tpl = task_template;
+		/*
+		console.log('Initialized, tpl is:');
+		console.log(this.tpl);
+		console.log('While first argument is:');
+		console.log(task_template);
+		*/
 		this.task = task_data;
 	},
 	
 	render: function() {
-		console.log("Rendering a task view.");
+		// console.log("Rendering a task view.");
+		// Get a readable-format date from dateLastDone seconds timestamp
+		var milSecs = this.task.dateLastDone * 1000;
+		var dateTJS = new Date(milSecs);
 		this.$el.append(this.tpl({
-			color: this.getColor,
-			taskName: this.task.name,
-			dateLastDone: this.task.dateLastDone
+			color: this.getColor(),
+			name: this.task.name,
+			dateLastDone: dateTJS.toLocaleString()
 		}));
 	},
 
@@ -30,6 +42,12 @@ app.views.TaskView = Marionette.View.extend({
 		var nowTSeconds = nowT.getTime() / 1000; // Milliseconds to seconds
 		var nSecondsDiff = nowTSeconds - this.task.dateLastDone;
 		var percentTilOverdue = nSecondsDiff / this.task.cycleTimeSeconds;
+		console.log({
+			'nowT': nowT,
+			'nowTSeconds': nowTSeconds,
+			'nSecondsDiff': nSecondsDiff,
+			'percentTilOverdue': percentTilOverdue
+		});
 		if(percentTilOverdue > 0.9) {
 			return 'btn-success';
 		} else if(percentTilOverdue > 0.33) {

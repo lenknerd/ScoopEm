@@ -19,14 +19,9 @@ $app = new \Slim\App;
 // Route for getting an html template for use in a view
 $app->get('/tpl/{name}', function($request, $response, $args) {
 	$templateName = $request->getAttribute('name');
-	$htdoc = new DOMDocument();
-	$htdoc->validateOnParse = true;
 
 	// Special view-specific handling... loads some template from file
-	handleTemplateSpecifics($request, $response, $args, $templateName, $htdoc);
-
-	// Return document to client
-	echo $htdoc->saveHTML();
+	echo handleTemplateSpecifics($templateName);
 });
 
 // Route for attempting to log in

@@ -20,14 +20,20 @@ app.views.HomeView = Marionette.View.extend({
 				function(data) {
 			// Store home template function in the view
 			vu.tpl = _.template(data);
-			vu.$el.html(vu.tpl());	
-		}, 'html');
+			vu.$el.html(vu.tpl());
+			// console.log('Finished getting home template.');
+		});
 
 		var load_tasktpl = $.get('php/api.php/tpl/taskTemplate',
 				function(data) {
 			// Store task template in the view
 			vu.task_tpl = _.template(data);
-		}, 'html');
+			/*
+			console.log('This should be a function:');
+			console.log(vu.task_tpl);
+			console.log('Finished getting task template.');
+			//*/
+		});
 
 		var load_tasks = $.get('php/api.php/getTasks',
 				function(data) {
@@ -37,21 +43,26 @@ app.views.HomeView = Marionette.View.extend({
 			} else {
 				/* Store tasks temporarily in this view, but will really
 				 * reside in the individual tasks */
-				vu.tasks = data.tasks;
+				// console.log('Finished getting tasks, here is data:');
+				// console.log(data);
+				vu.tasks = data.specifics.tasks;
 			}
 		}, 'json');
 
 		// When you've got the home template rendered, loaded task template
 		// and also loaded all the tasks, then build task views
 		$.when(load_hometpl, load_tasktpl, load_tasks).done(function() {
+			// console.log('All done, rendering stuff in home now.');
 			vu.task_views = [];
-			$.each( vu.tasks, function(i, task) {
-				vu.task_views.push(new app.views.TaskView(
-							vu.task_tpl,
-							vu.data.tasks[i])
-						);
-				vu.task_views[vu.task_views.length-1].render();
-			});
+			// Sequential loop rendering task views
+			for(var ii=0; ii < vu.tasks.length; ii++) {
+				// console.log('Initializing a task view with first arg:');
+				// console.log(vu.task_tpl);
+				var nv = new app.views.TaskView();
+				nv.setTemplateAndData(vu.task_tpl, vu.tasks[ii]);
+				nv.render();
+				vu.task_views.push(nv);
+			}
 		});
 	},
 	

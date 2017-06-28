@@ -11,7 +11,7 @@
  * all of them load html somehow, but some may modify that after, some may
  * check session authentication before choosing what to load, etc.
  */
-function handleTemplateSpecifics($req, $resp, $args, $tplName, &$htdoc) {
+function handleTemplateSpecifics($tplName) {
 
 	/* If we're an internal-only template, will be inside /internal/ folder.
 	 * List them here so can validate and look in there
@@ -20,16 +20,15 @@ function handleTemplateSpecifics($req, $resp, $args, $tplName, &$htdoc) {
 
 	if( in_array($tplName, $internalPages) ) {
 		if( hasValidSession() ) {
-			$htdoc->loadHTMLFile("../html/${tplName}.html");
+			return file_get_contents("../html/${tplName}.html");
 		} else {
 			// Read in the unauthorized access deal
-			$htdoc->loadHTMLFile("../html/unauthorizedTemplate.html");
+			return file_get_contents("../html/unauthorizedTemplate.html");
 		}
 	} else {
 		// If not an internal page, no need to check session
-		$htdoc->loadHTMLFile("../html/${tplName}.html");
+		return file_get_contents("../html/${tplName}.html");
 	}
-
 }
 
 
