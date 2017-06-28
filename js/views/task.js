@@ -27,7 +27,8 @@ app.views.TaskView = Marionette.View.extend({
 	// Decide color based on how close to being overdue the task is
 	getColor: function() {		
 		var nowT = new Date();
-		var nSecondsDiff = nowT.getTime() - this.task.dateLastDone.getTime();
+		var nowTSeconds = nowT.getTime() / 1000; // Milliseconds to seconds
+		var nSecondsDiff = nowTSeconds - this.task.dateLastDone;
 		var percentTilOverdue = nSecondsDiff / this.task.cycleTimeSeconds;
 		if(percentTilOverdue > 0.9) {
 			return 'btn-success';

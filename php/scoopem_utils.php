@@ -8,22 +8,22 @@
 /* Task object with database accessors */
 class ScoopEmTask {
 	// When it was last done
-	public $dateLastDone = new DateTime();
+	public $dateLastDone;
 	// How long you should go between doing it
 	public $cycleTimeSeconds = 3600 * 24; // One day is default
 	// Name of task
 	public $name = "no name";
 
 	// Constructor takes the three els
-	public function __construct($dateLast, $cycleT, $nm) {
-		$this->dateLastDone = $dateLast;
+	public function __construct($dateLastString, $cycleT, $nm) {
+		$this->dateLastDone = new DateTime($dateLastString);
 		$this->cycleTimeSeconds = $cycleT;
 		$this->name = $nm;
 	}
 
 	// Turn into To-JSON-friendly associative array
 	public function toAssocArray() {
-		return (object) ['dateLastDone' => $this->success,
+		return (object) ['dateLastDone' => $this->dateLastDone->getTimestamp(),
 			'name' => $this->name,
 			'cycleTimeSeconds' => $this->cycleTimeSeconds
 		];
@@ -38,8 +38,8 @@ class JsonResponse_Tasks extends JsonResponse {
 	// The required override... no assoc array needed here, just a simple var
 	public function specificsAssocArray() {
 		$tArr = array();
-		for($i=0; $i<count($tasks); ++$i) {
-			$tArr[] = $tasks[$i]->toAssocArray();
+		for($i=0; $i<count($this->tasks); ++$i) {
+			$tArr[] = $this->tasks[$i]->toAssocArray();
 		}
 		return (object) ['tasks' => $tArr];
 	}
@@ -48,12 +48,13 @@ class JsonResponse_Tasks extends JsonResponse {
 /* Lookup tasks from database for current user, return JSON response object
  * with those tasks */
 function tasksResponse() {
+
 	// Connect to database and declare a query
 	$conn = getDatabaseConnection();
 
 	// Prepare statement to check for users with that name
-	$statement = $conn->prepare('SELECT lastdone, cycleT, name
-		FROM users WHERE username = :username',
+	$statement = $conn->prepare('SELECT lastdone, cycleTimeSeconds, name
+		FROM tasks WHERE username = :username',
 		array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY) );
 	// Execute
 	$statement->execute(array(':username' => $_SESSION["uname"]));
@@ -70,6 +71,9 @@ function tasksResponse() {
 			$taskrows[$i][1],
 			$taskrows[$i][2]);
 	}
+
+	// If we got here, was successful...
+	$rsp->setSuccessful();
 
 	// Return the JsonResponse object
 	return $rsp;

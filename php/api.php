@@ -50,7 +50,7 @@ $app->get('/logout', function() {
 })->add($RequireAuthMW);
 
 // Route for requesting task data
-$app->post('/getTasks', function() {
+$app->get('/getTasks', function() {
 	// Gets JsonResponse object
 	$respon = tasksResponse();
 	// This echoes the JSON response

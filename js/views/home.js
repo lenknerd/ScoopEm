@@ -29,10 +29,7 @@ app.views.HomeView = Marionette.View.extend({
 			vu.task_tpl = _.template(data);
 		}, 'html');
 
-		var load_tasks = $.post('php/api.php/getTasks',
-				{
-					user: app.username
-				},
+		var load_tasks = $.get('php/api.php/getTasks',
 				function(data) {
 			// If problem on server, log it
 			if(!data.success) {
