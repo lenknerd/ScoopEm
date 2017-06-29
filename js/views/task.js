@@ -25,19 +25,40 @@ app.views.TaskView = Marionette.View.extend({
 	},
 	
 	render: function() {
-		// console.log("Rendering a task view.");
-		// Get a readable-format date from dateLastDone seconds timestamp
-		var milSecs = this.task.dateLastDone * 1000;
-		var dateTJS = new Date(milSecs);
+		console.log("Rendering a task view.");	
 		this.$el.append(this.tpl({
 			color: this.getColor(),
 			name: this.task.name,
-			dateLastDone: dateTJS.toLocaleString()
+			dateLastDone: this.getTLastDoneString()
 		}));
 	},
 
+	// Format a date time string in 12-hour mode, with day of week
+	getTLastDoneString: function() {
+		var milSecs = this.task.dateLastDone * 1000;
+		var dateJS = new Date(milSecs);
+		var dateStr = dateJS.toString().split(" ").slice(0,3).join(" ");
+		var hrs = dateJS.getHours();
+		var am_pm_01 = Math.floor(hrs / 12);
+		hrs = hrs - (12*am_pm_01);
+		var hrs_str = hrs.toString();
+		if(hrs == 0) {
+			hrs_str = "12";
+		}
+		var am_pm_str = 'AM';
+		if(am_pm_01 > 0) {
+			am_pm_str = 'PM';
+		}
+		var mins = dateJS.getMinutes();
+		var min_str = mins.toString();
+		if(mins < 10) {
+			min_str = "0" + min_str;
+		}
+		return dateStr + ", " + hrs_str + ":" + min_str + " " + am_pm_str;
+	},
+
 	// Decide color based on how close to being overdue the task is
-	getColor: function() {		
+	getColor: function() {
 		var nowT = new Date();
 		var nowTSeconds = nowT.getTime() / 1000; // Milliseconds to seconds
 		var nSecondsDiff = nowTSeconds - this.task.dateLastDone;
