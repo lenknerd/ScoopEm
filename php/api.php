@@ -52,6 +52,12 @@ $app->get('/getTasks', function() {
 	$respon->respondAndExit();
 })->add($RequireAuthMW);
 
+// Route for updating a task data
+$app->post('/updateTask', function() {
+	// TODO continue
+	// $_POST['username']   ,   $_POST['password']
+})->add($RequireAuthMW);
+
 
 // Run the application
 $app->run();

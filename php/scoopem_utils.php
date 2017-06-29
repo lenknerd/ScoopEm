@@ -13,19 +13,23 @@ class ScoopEmTask {
 	public $cycleTimeSeconds = 3600 * 24; // One day is default
 	// Name of task
 	public $name = "no name";
+	// ID of task (unique int in database on server)
+	public $id = 0;
 
 	// Constructor takes the three els
-	public function __construct($dateLastString, $cycleT, $nm) {
+	public function __construct($dateLastString, $cycleT, $nm, $i) {
 		$this->dateLastDone = new DateTime($dateLastString);
 		$this->cycleTimeSeconds = $cycleT;
 		$this->name = $nm;
+		$this->id = $i;
 	}
 
 	// Turn into To-JSON-friendly associative array
 	public function toAssocArray() {
 		return (object) ['dateLastDone' => $this->dateLastDone->getTimestamp(),
 			'name' => $this->name,
-			'cycleTimeSeconds' => $this->cycleTimeSeconds
+			'cycleTimeSeconds' => $this->cycleTimeSeconds,
+			'id' => $this->id
 		];
 	}
 }
@@ -53,7 +57,7 @@ function tasksResponse() {
 	$conn = getDatabaseConnection();
 
 	// Prepare statement to check for users with that name
-	$statement = $conn->prepare('SELECT lastdone, cycleTimeSeconds, name
+	$statement = $conn->prepare('SELECT lastdone, cycleTimeSeconds, name, id
 		FROM tasks WHERE username = :username',
 		array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY) );
 	// Execute
@@ -69,7 +73,9 @@ function tasksResponse() {
 	for($i = 0; $i < count($taskrows); ++$i) {
 		$rsp->tasks[] = new ScoopEmTask($taskrows[$i][0],
 			$taskrows[$i][1],
-			$taskrows[$i][2]);
+			$taskrows[$i][2],
+			$taskrows[$i][3]
+		);
 	}
 
 	// If we got here, was successful...

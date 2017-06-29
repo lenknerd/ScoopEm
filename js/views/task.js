@@ -21,7 +21,7 @@ app.views.TaskView = Marionette.View.extend({
 		console.log('While first argument is:');
 		console.log(task_template);
 		*/
-		this.task = task_data;
+		this.task = task_data; // includes id...
 	},
 	
 	render: function() {
@@ -63,20 +63,23 @@ app.views.TaskView = Marionette.View.extend({
 		var nowTSeconds = nowT.getTime() / 1000; // Milliseconds to seconds
 		var nSecondsDiff = nowTSeconds - this.task.dateLastDone;
 		var percentTilOverdue = nSecondsDiff / this.task.cycleTimeSeconds;
+		/*
+		console.log('Task due-ness calculation:');
 		console.log({
 			'nowT': nowT,
 			'nowTSeconds': nowTSeconds,
 			'nSecondsDiff': nSecondsDiff,
 			'percentTilOverdue': percentTilOverdue
 		});
+		*/
 		if(percentTilOverdue > 0.9) {
-			return 'btn-success';
-		} else if(percentTilOverdue > 0.33) {
-			return 'btn-primary';
-		} else if(percentTilOverdue > 0.1) {
-			return 'btn-warning';
-		} else {
 			return 'btn-danger';
+		} else if(percentTilOverdue > 0.77) {
+			return 'btn-warning';
+		} else if(percentTilOverdue > 0.1) {
+			return 'btn-primary';
+		} else {
+			return 'btn-success';
 		}
 	},
 	
