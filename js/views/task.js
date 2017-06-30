@@ -6,9 +6,9 @@
 
 app.views.TaskView = Marionette.View.extend({
 	
-	el: '#tasks', // Element in which it will go
+	el: '', // Be sure to set via el: option to initialize 
 	
-	initialize: function() {
+	initialize: function(options) {
 	},
 	
 	setTemplateAndData: function(task_template, task_data) {
@@ -26,7 +26,7 @@ app.views.TaskView = Marionette.View.extend({
 	
 	render: function() {
 		console.log("Rendering a task view.");	
-		this.$el.append(this.tpl({
+		this.$el.html(this.tpl({
 			color: this.getColor(),
 			name: this.task.name,
 			dateLastDone: this.getTLastDoneString()
@@ -84,6 +84,36 @@ app.views.TaskView = Marionette.View.extend({
 	},
 	
 	events: {
+		'click #do_task': 'doTask',
+		'click #edit': 'editTask'
+	},
+
+	// Update time last done to now
+	doTask: function() {
+		console.log('Doing task...');
+		var vu = this;
+		$.post('php/api.php/updateTask',
+			{
+				id: vu.task.id
+			},
+			function(data) {
+			// If problem on server, log it
+			if(!data.success) {
+				console.log(data.errMessage);
+			} else {
+				// If all ok, save new done time and re-render
+				console.log("Success updating task last done t.");
+				vu.task.dateLastDone = data.specifics.tStampSeconds;
+				vu.render();
+			}
+		}, 'json');
+		
+	},
+	
+	// Edit name or frequency of task
+	editTask: function() {
+		console.log('Editing task...');
+		// TODO navigate to new route for editing name, cycle time, etc
 	},
 	
 	// Empty out main element

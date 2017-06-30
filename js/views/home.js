@@ -6,7 +6,7 @@
 
 app.views.HomeView = Marionette.View.extend({
 	
-	el: '#main', // Where it will go in index.html
+	el: '#main', // tbd
 	
 	initialize: function() {
 	},
@@ -14,7 +14,6 @@ app.views.HomeView = Marionette.View.extend({
 	render: function() {
 		console.log("Rendering home view.");
 		var vu = this;
-
 		// Load the template and show it
 		var load_hometpl = $.get('php/api.php/tpl/homeTemplate',
 				function(data) {
@@ -54,11 +53,16 @@ app.views.HomeView = Marionette.View.extend({
 		$.when(load_hometpl, load_tasktpl, load_tasks).done(function() {
 			// console.log('All done, rendering stuff in home now.');
 			vu.task_views = [];
-			// Sequential loop rendering task views
+			// Build holder elements for all the tasks
+			vu.$el.find('#tasks').html(
+					'<div class="taskcontainer"></div>'.repeat(
+						vu.tasks.length
+			));
+			// Sequential loop rendering task views into those els
 			for(var ii=0; ii < vu.tasks.length; ii++) {
-				// console.log('Initializing a task view with first arg:');
-				// console.log(vu.task_tpl);
-				var nv = new app.views.TaskView();
+				var nv = new app.views.TaskView({
+					el: '.taskcontainer:eq(' + ii + ')'
+				});
 				nv.setTemplateAndData(vu.task_tpl, vu.tasks[ii]);
 				nv.render();
 				vu.task_views.push(nv);

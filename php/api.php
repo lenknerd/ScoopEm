@@ -54,8 +54,10 @@ $app->get('/getTasks', function() {
 
 // Route for updating a task data
 $app->post('/updateTask', function() {
-	// TODO continue
-	// $_POST['username']   ,   $_POST['password']
+	// Gets JsonResponse object
+	$respon = updateTimeForTask( $_POST['id'] );
+	// Respond
+	$respon->respondAndExit();
 })->add($RequireAuthMW);
 
 

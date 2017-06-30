@@ -56,7 +56,7 @@ function tasksResponse() {
 	// Connect to database and declare a query
 	$conn = getDatabaseConnection();
 
-	// Prepare statement to check for users with that name
+	// Prepare statement to check for tasks for this user
 	$statement = $conn->prepare('SELECT lastdone, cycleTimeSeconds, name, id
 		FROM tasks WHERE username = :username',
 		array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY) );
@@ -82,6 +82,43 @@ function tasksResponse() {
 	$rsp->setSuccessful();
 
 	// Return the JsonResponse object
+	return $rsp;
+}
+
+/* Child of JsonResponse abstract class, specific data is nSeconds */
+class JsonResponse_NSeconds extends JsonResponse {
+	// Some string data that may be provided with response
+	public $tStampSeconds = 0;
+
+	// The required override... no assoc array needed here, just a simple var
+	public function specificsAssocArray() {
+		return (object) ['tStampSeconds' => $this->tStampSeconds];
+	}
+}
+
+// Update time to now for task with given ID
+function updateTimeForTask($id) {
+	// Connect to database and declare a query
+	$conn = getDatabaseConnection();
+
+	// Prepare statement to 
+	$statement = $conn->prepare('UPDATE tasks
+		SET lastdone = :tnow
+		WHERE id = :id',
+		array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY) );
+	// Execute the statement with current value of time, id
+	$tNow = new DateTime();
+	$statement->execute(array(
+		':id' => $id,
+		':tnow' => $tNow->format('Y-m-d H:i:s')
+	));
+	// Done with DB part here, disconnect
+	$conn = null;
+
+	// Respond with the new timestamp in seconds
+	$rsp = new JsonResponse_NSeconds("");
+	$rsp->tStampSeconds = $tNow->getTimestamp();
+	$rsp->setSuccessful();
 	return $rsp;
 }
 
