@@ -59,17 +59,12 @@ app.on("start", function() {
 	console.log("Starting router.");
 	Backbone.history.start();
 		
-	/* Check if there is no route (# in addr), go to logIn
+	/* If no route or not logged in, go to login
 	 * Note, server would force logIn anyway even if js was hacked
 	 * but save some effort by checking locally */
-	if( ! window.location.href.includes("#") ) {
-		console.log("Detected no route.  Are we logged in?");
-		if(!app.loggedIn) {
-			console.log("Nope, go to logIn."); 
-			app.router.navigate('logIn', {trigger: true});
-		} else {
-			// Nothing here yet
-		}
+	if( ! window.location.href.includes("#") || !app.loggedIn ) {
+		console.log("Detected no route or not logged in.");
+		app.router.navigate('logIn', {trigger: true});
 	}
 });
 
