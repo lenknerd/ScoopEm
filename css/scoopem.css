@@ -7,6 +7,8 @@
 
 #main-holder {
 	text-align: center;
+	position: relative;
+	top: -20px;
 }
 
 .task {
@@ -15,4 +17,13 @@
 
 #add-task-holder {
 	margin: 10px;
+}
+
+/* Logout button top right */
+#logout-div {
+	position: relative;
+	top: -45px;
+	float: right;
+}
+#logout-btn {
 }

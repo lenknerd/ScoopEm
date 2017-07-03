@@ -29,6 +29,16 @@ $app->post('/login', function() {
 	validateAndCreateSession($_POST['username'], $_POST['password']);
 });
 
+// Route for checking if logged and if so return username
+$app->get('/checkSession', function() {
+	$rsp = new JsonResponse_Str("Session is no good.");
+	if( hasValidSession() ) {
+		$rsp->specificString = $_SESSION["uname"];
+		$rsp->setSuccessful();
+	}
+	$rsp->respondAndExit();
+});
+
 // Middleware function to return empty error response if not logged in
 $RequireAuthMW = function ($request, $response, $next) {
 	if( ! hasValidSession() ) {

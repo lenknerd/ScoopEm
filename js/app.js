@@ -58,14 +58,20 @@ app.on("start", function() {
 	 * even though there aren't any full-page refreshes */
 	console.log("Starting router.");
 	Backbone.history.start();
-		
-	/* If no route or not logged in, go to login
-	 * Note, server would force logIn anyway even if js was hacked
-	 * but save some effort by checking locally */
-	if( ! window.location.href.includes("#") || !app.loggedIn ) {
-		console.log("Detected no route or not logged in.");
-		app.router.navigate('logIn', {trigger: true});
-	}
+	
+	// Check session status from server, then dep on result...
+	$.get('php/api.php/checkSession', function(data) {
+		if(data.success) {
+			// We're logged in, set user and go to home
+			app.loggedIn = true;
+			app.userName = data.
+			app.router.navigate('home', {trigger: true});
+		} else {
+			app.loggedIn = false;
+			app.userName = "";
+			app.router.navigate('logIn', {trigger: true});
+		}
+	});
 });
 
 // Run the app once everything on the HTML side has loaded

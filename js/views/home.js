@@ -71,6 +71,18 @@ app.views.HomeView = Marionette.View.extend({
 	},
 	
 	events: {
+		'click #logout' : 'requestLogout'
+	},
+
+	// Click top-right logout
+	requestLogout: function() {
+		console.log('Attempting logout...');
+		$.get('php/api.php/logout', function(data) {
+			console.log('Sucessful logout.');
+			app.userName = "";
+			app.loggedIn = false;
+			app.router.navigate('logIn', {trigger: true});
+		});	
 	},
 	
 	// Empty out main element
